@@ -7,9 +7,14 @@ const PORT = 8080;
 app.use(cors());
 app.use(express.json());
 
-app.post('/api/token', async (req, res) => {
-    const { client_id, refresh_token } = req.body;
+app.post('/api', async (req, res) => {
+    res.status(200).json({"message":"Hello world"});
+});
 
+app.post('/api/token', async (req, res) => {
+    console.log("start get token");
+    const { client_id, refresh_token } = req.body;
+    console.log(`your data is: ${client_id} ${refresh_token}`);
     const credentials = {
         grant_type: "refresh_token",
         client_id: client_id,
