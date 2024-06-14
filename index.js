@@ -35,7 +35,7 @@ app.post('/api/token', async (req, res) => {
 });
 
 app.post('/api/executions', async (req, res) => {
-    const { botName, token } = req.body;
+    const { botName, token, endPointOrquest } = req.body;
 
     const options = {
         method: 'GET',
@@ -45,8 +45,8 @@ app.post('/api/executions', async (req, res) => {
         }
     };
     const endPoint = botName ?
-        `https://cloud.uipath.com/brookrpfaldp/Prod/orchestrator_/odata/Jobs?$select=ReleaseName,EndTime,StartTime,key&$orderby=StartTime%20desc&$filter=ReleaseName eq '${botName}'` :
-        'https://cloud.uipath.com/brookrpfaldp/Prod/orchestrator_/odata/Jobs?$select=ReleaseName,EndTime,StartTime,key&$orderby=StartTime%20desc'
+        `${endPointOrquest}/odata/Jobs?$select=ReleaseName,EndTime,StartTime,key&$orderby=StartTime%20desc&$filter=ReleaseName eq '${botName}'` :
+        `${endPointOrquest}/odata/Jobs?$select=ReleaseName,EndTime,StartTime,key&$orderby=StartTime%20desc`
     const response = await fetch(endPoint, options);
 
     const responseData = await response.json();
@@ -54,5 +54,5 @@ app.post('/api/executions', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Proxy server running on ${PORT}`);
+    console.log(`Proxy server running on https://useorquestuipath.onrender.com/${PORT}`);
 });
