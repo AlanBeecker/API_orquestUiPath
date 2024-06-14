@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 app.post('/api', async (req, res) => {
-    res.status(200).json({"message":"Hello world"});
+    res.status(200).json({ "message": "Hello world" });
 });
 
 app.post('/api/token', async (req, res) => {
@@ -36,7 +36,7 @@ app.post('/api/token', async (req, res) => {
 
 app.post('/api/executions', async (req, res) => {
     const { botName, token, endPointOrquest } = req.body;
-
+    console.log(`your execution data: ${botName} -> ${endPointOrquest} -> ${token}`);
     const options = {
         method: 'GET',
         headers: {
@@ -47,6 +47,7 @@ app.post('/api/executions', async (req, res) => {
     const endPoint = botName ?
         `${endPointOrquest}/odata/Jobs?$select=ReleaseName,EndTime,StartTime,key&$orderby=StartTime%20desc&$filter=ReleaseName eq '${botName}'` :
         `${endPointOrquest}/odata/Jobs?$select=ReleaseName,EndTime,StartTime,key&$orderby=StartTime%20desc`
+    console.log(endPoint);
     const response = await fetch(endPoint, options);
 
     const responseData = await response.json();
